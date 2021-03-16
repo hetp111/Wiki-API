@@ -58,11 +58,20 @@ app.route("/articles/:articleTitle")
     .put(
         function(req,res){
             Article.updateOne({title:req.params.articleTitle},{title:req.body.title,content:req.body.content},function(err,docs){
-                if(!err)res.send(req.body);
+                if(!err)res.send("OK");
+                else res.send(err);
+            });
+        }
+    )
+    .patch(
+        function(req,res){
+            Article.updateOne({title:req.params.articleTitle},{$set:req.body},function(err,docs){
+                if(!err)res.send("OK");
                 else res.send(err);
             });
         }
     );
+
 
 app.listen(3000, function () {
     console.log("Server started on port 3000");
