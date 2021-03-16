@@ -50,23 +50,35 @@ app.route("/articles/:articleTitle")
     .get(
         function(req,res){
             Article.findOne({title:req.params.articleTitle},function(err, foundArticle){
-                if(foundArticle)res.send(foundArticle);
-                else res.send("Not found.");
+                if(!err){
+                    if(foundArticle)res.send(foundArticle);
+                    else res.send("Not found.");
+                }else{
+                    console.log(err);
+                }
             });
         }
     )
     .put(
         function(req,res){
-            Article.updateOne({title:req.params.articleTitle},{title:req.body.title,content:req.body.content},function(err,docs){
-                if(!err)res.send("OK");
+            Article.updateOne({title:req.params.articleTitle},{title:req.body.title,content:req.body.content},function(err){
+                if(!err)res.send("Putted");
                 else res.send(err);
             });
         }
     )
     .patch(
         function(req,res){
-            Article.updateOne({title:req.params.articleTitle},{$set:req.body},function(err,docs){
-                if(!err)res.send("OK");
+            Article.updateOne({title:req.params.articleTitle},{$set:req.body},function(err){
+                if(!err)res.send("Patched");
+                else res.send(err);
+            });
+        }
+    )
+    .delete(
+        function(req,res){
+            Article.deleteOne({title:req.params.articleTitle},function(err){
+                if(!err)res.send("Deleted");
                 else res.send(err);
             });
         }
