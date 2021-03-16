@@ -1,3 +1,3 @@
 # Wiki-API
 
-Building a REST API.
+A simple REST API.
